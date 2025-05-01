@@ -1,7 +1,6 @@
 import '../utilz/font.dart';
 import 'package:flutter/material.dart';
 
-
 abstract class AppCard {
   static Card card = Card(
     margin: const EdgeInsets.only(left: 10, top: 20),
@@ -13,7 +12,8 @@ abstract class AppCard {
     ),
     child: const Padding(
       padding: EdgeInsets.all(8.0),
-      child: Row(///
+      child: Row(
+        ///
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ abstract class AppCard {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [Text("11/03/2025 "), Text("05:00 PM")],
+              children: [Text("29/05/2025 "), Text("07:00 PM")],
             ),
           ),
         ],

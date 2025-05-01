@@ -38,7 +38,11 @@ class BarApp extends StatelessWidget {
                       "Hello!",
                       textAlign: TextAlign.start,
                     ),
-                    Text("Ahmed Hegazy")
+                    Text("Ma7moud selmy",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        )),
                   ],
                 )
               ],
