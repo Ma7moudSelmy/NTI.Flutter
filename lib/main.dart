@@ -1,8 +1,18 @@
-import 'core/utilz/color.dart';
 import 'package:flutter/material.dart';
-import 'features/Welcome/widgets/splash.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'features/onboarding/views/splash_page.dart';
 
-void main() {
+import 'core/cache/cache_helper.dart';
+
+import 'core/utils/app_text_styles.dart';
+
+import 'core/utils/app_colors.dart';
+import 'features/home/manager/user_cubit/user_cubit.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 
@@ -11,16 +21,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: "LexendDeca",
-        scaffoldBackgroundColor: AppColor.scaffoldColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return BlocProvider(
+      create: (context) => UserCubit(),
+      child: Builder(
+        builder: (context) {
+          return GetMaterialApp(
+            title: 'To-Do',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: AppTextStyles.fontFamily,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              scaffoldBackgroundColor: AppColors.scaffoldBackground,
+            ),
+            home: SplashPage(),
+          );
+        },
       ),
-      home: const SplashScreen(),
     );
   }
 }
