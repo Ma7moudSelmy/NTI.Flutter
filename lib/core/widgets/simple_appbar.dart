@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../utils/app_text_styles.dart';
-import '../wrapper/svg_wrapper.dart';
+import 'package:get/get.dart'; // Add this import for `.tr`
+
+import '../translation/translation_keys.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_text_styles.dart';
+import '../wrapper/svg_wrapper.dart';
 
 class SimpleAppBar {
   static AppBar build({
@@ -45,7 +48,7 @@ class SimpleAppBar {
                         SvgWrappe(assetName: AppAssets.delete),
                         SizedBox(width: 5),
                         Text(
-                          'Delete',
+                          TranslationKeys.delete.tr, // Replaced string
                           style: AppTextStyles.s12w300.copyWith(
                             color: AppColors.white,
                           ),

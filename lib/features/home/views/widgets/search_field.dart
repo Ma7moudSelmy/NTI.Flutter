@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../core/translation/translation_keys.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
@@ -16,7 +18,7 @@ class SearchField extends StatelessWidget {
           horizontal: 16.0,
           vertical: 14,
         ),
-        hintText: 'Search...',
+        hintText: TranslationKeys.Search.tr,
         hintStyle: AppTextStyles.s14w200.copyWith(color: AppColors.grey),
         filled: true,
         fillColor: AppColors.white,

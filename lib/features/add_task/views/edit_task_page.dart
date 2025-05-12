@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // Add this import for `.tr`
 
+import '../../../core/translation/translation_keys.dart';
 import '../../../core/widgets/date_field.dart';
 import '../../../core/widgets/my_custom_button.dart';
 import '../../../core/widgets/my_text_form_field.dart';
@@ -19,7 +21,7 @@ class EditTaskPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: SimpleAppBar.build(
-          title: 'Edit Task',
+          title: TranslationKeys.editTask.tr, // Replaced string
           isDelete: true,
           onBack: () {
             Navigator.pop(context);
@@ -55,14 +57,17 @@ class EditTaskPage extends StatelessWidget {
                           fieldType: TextFieldType.taskDescribtion,
                           controller: descriptionController,
                         ),
-
                         SizedBox(height: 15),
                         DateField(),
                         SizedBox(height: 30),
-                        MyCustomeButton(text: 'Mark as Done', onPressed: () {}),
+                        MyCustomeButton(
+                          text:
+                              TranslationKeys.markAsDone.tr, // Replaced string
+                          onPressed: () {},
+                        ),
                         SizedBox(height: 15),
                         MyCustomeButton(
-                          text: 'Update',
+                          text: TranslationKeys.update.tr, // Replaced string
                           onPressed: () {},
                           isOutlinedButton: true,
                         ),

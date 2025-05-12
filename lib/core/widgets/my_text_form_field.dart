@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../translation/translation_keys.dart';
 import '../../features/add_task/data/models/group_model.dart';
 import '../utils/app_text_styles.dart';
 
@@ -70,7 +72,10 @@ class MyTextFormField extends StatelessWidget {
         prefixIconPath: AppAssets.password,
         suffixIconPath: obsecureText ? AppAssets.lock : AppAssets.unlock,
         onSuffixIconPressed: onSuffixPressed,
-        hint: isConfirmPass ? 'Confirm Password' : 'Password',
+        hint:
+            isConfirmPass
+                ? TranslationKeys.ConfirmPassword.tr
+                : TranslationKeys.Password.tr,
       ),
       obscureText: obsecureText,
     );
@@ -84,7 +89,7 @@ class MyTextFormField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: AppTextStyles.s14w300,
       validator: _noValidation,
-      decoration: _myInputDecoration(hint: 'Title'),
+      decoration: _myInputDecoration(hint: TranslationKeys.title.tr),
     );
   }
 
@@ -97,7 +102,7 @@ class MyTextFormField extends StatelessWidget {
       validator: _noValidation,
       maxLines: null,
       minLines: 1,
-      decoration: _myInputDecoration(hint: 'Description'),
+      decoration: _myInputDecoration(hint: TranslationKeys.description.tr),
     );
   }
 
@@ -120,15 +125,18 @@ class MyTextFormField extends StatelessWidget {
       onChanged: onDropDownChanged,
       validator: (value) {
         if (value == null) {
-          return 'Please select an option';
+          return TranslationKeys.Pleaseselectanoption.tr;
         }
         return null;
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: AppTextStyles.s14w200.copyWith(color: AppColors.grey),
-      decoration: _myInputDecoration(hint: 'Group'),
+      decoration: _myInputDecoration(hint: TranslationKeys.group.tr),
     );
   }
+
+  /////////////////////////////////////////////////////////////////////////
+  // --------------> Decorations <---------------
 
   InputBorder _myInputBorder(Color borderColor) {
     return OutlineInputBorder(
@@ -178,21 +186,25 @@ class MyTextFormField extends StatelessWidget {
     );
   }
 
+  ////////////////////////////////////////////////////////////////////////////////
+  // ---------> Validations <--------------
   String? _validatePassword(String? value) {
     final passwordRegEx = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return TranslationKeys.Passwordisrequired.tr;
     } else if (!passwordRegEx.hasMatch(value)) {
-      return 'Password must be at least 8 characters, include letters and numbers';
+      return TranslationKeys
+          .Passwordmustbeatleast8charactersincludelettersandnumbers
+          .tr;
     }
     return null;
   }
 
   String? _validateConfirmPass(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return TranslationKeys.Passwordisrequired.tr;
     } else if (passController == null || passController!.text != value) {
-      return 'Password not matched';
+      return TranslationKeys.Passwordnotmatched.tr;
     }
     return null;
   }
@@ -200,16 +212,16 @@ class MyTextFormField extends StatelessWidget {
   String? _validateUsername(String? value) {
     final usernameRegEx = RegExp(r'^[a-zA-Z0-9_]{3,16}$');
     if (value == null || value.isEmpty) {
-      return 'Username is required';
+      return TranslationKeys.Usernameisrequired.tr;
     } else if (!usernameRegEx.hasMatch(value)) {
-      return 'Username must be 3-16';
+      return TranslationKeys.Usernamemustbe3_16.tr;
     }
     return null;
   }
 
   String? _noValidation(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Field is required';
+      return TranslationKeys.Fieldisrequired.tr;
     }
     return null;
   }

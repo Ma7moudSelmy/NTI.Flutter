@@ -9,10 +9,10 @@ class AddTaskImage extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        child: Image.asset("assets/images/logo.png"),
         height: 200,
         width: 250,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+        child: ClipRRect(borderRadius: BorderRadius.circular(20), child: image),
       ),
     );
   }

@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../core/translation/translation_keys.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/widgets/main_image.dart';
 import '../../../core/widgets/my_custom_button.dart';
@@ -68,7 +70,7 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
                     ),
                     SizedBox(height: 30),
                     MyCustomeButton(
-                      text: 'Update',
+                      text: TranslationKeys.update.tr,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           Navigator.pop(context);

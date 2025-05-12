@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import '../../../core/translation/translation_keys.dart';
+import '../../../core/cache/cache_helper.dart';
+import '../../../core/cache/cache_keys.dart';
 import '../../../core/helper/get_helper.dart';
 import '../../../core/utils/app_assets.dart';
-import '../../home/manager/user_cubit/user_cubit.dart';
 import '../manager/login_cubit/login_cubit.dart';
 import '../manager/login_cubit/login_state.dart';
 import '../../home/views/home_page.dart';
@@ -50,23 +53,27 @@ class LoginPage extends StatelessWidget {
                               );
                             },
                           ),
-
                           SizedBox(height: 15),
                           BlocConsumer<LoginCubit, LoginState>(
-                            listener: (context, state) {
+                            listener: (context, state) async {
                               if (state is LoginErrorState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Login failed!')),
+                                  SnackBar(content: Text(state.errorMessage)),
                                 );
                               } else if (state is LoginSuccessState) {
-                                UserCubit.get(context).getUser(state.userModel);
+                                // Cache loggedin ££££££££££££££
+                                // await CacheHelper.saveData(
+                                //   key: CacheKeys.loggedIn,
+                                //   value: true,
+                                // );
+
                                 GetHelper.pushReplaceAll(() => HomePage());
                               }
                             },
                             builder: (context, state) {
                               return MyCustomeButton(
                                 isLoading: state is LoginLoadingState,
-                                text: 'Login',
+                                text: TranslationKeys.login.tr,
                                 onPressed: () {
                                   cubit.onLoginPressed();
                                 },
@@ -75,8 +82,8 @@ class LoginPage extends StatelessWidget {
                           ),
                           SizedBox(height: 25),
                           MyFooter(
-                            title: 'Don\'t Have An Account?',
-                            action: 'Register',
+                            title: TranslationKeys.dontHaveAnAccount.tr,
+                            action: TranslationKeys.register.tr,
                             onPressed: () {
                               GetHelper.pushReplace(() => SignupPage());
                             },

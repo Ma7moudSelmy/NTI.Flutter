@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import '../../../core/translation/translation_keys.dart';
 import '../../../core/helper/get_helper.dart';
 import '../../home/manager/user_cubit/user_cubit.dart';
 import '../manager/update_username_cubit/update_username_cubit.dart';
@@ -84,7 +86,7 @@ class UpdateUsernamePage extends StatelessWidget {
                             },
                             builder: (context, state) {
                               return MyCustomeButton(
-                                text: 'Update',
+                                text: TranslationKeys.update.tr,
                                 isLoading: state is UpdateUsernameLoading,
                                 onPressed: () {
                                   cubit.updateUsername(UserCubit.get(context));

@@ -2,13 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import '../data/models/task_model.dart';
+import '../manager/today_tasks_cubit/today_tasks_state.dart';
 import '../../../core/helper/get_helper.dart';
-import '../manager/user_cubit/user_cubit.dart';
+import '../../../core/translation/translation_keys.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/widgets/simple_appbar.dart';
 import '../manager/today_tasks_cubit/today_tasks_cubit.dart';
 
-import '../manager/user_cubit/user_state.dart';
 import 'widgets/filter_dialog.dart';
 import 'widgets/floating_button.dart';
 import 'widgets/search_field.dart';
@@ -23,28 +25,12 @@ class TodayTasksPage extends StatelessWidget {
     log('Task tapped');
   }
 
-  void onFilterTapped(BuildContext context, TodayTasksCubit cubit) {
+  void onFilterTapped(BuildContext context, cubit) {
     log('Filter tapped');
     showDialog(
       context: context,
       builder: (_) {
-        return FilterDialog(
-          groupFilters: cubit.groupFilters,
-          statusFilters: cubit.statusFilters,
-          onGroupSelected: (group) {
-            cubit.onGroupFilterChanged(group);
-          },
-          onStatusSelected: (status) {
-            cubit.onStatusFilterChanged(status);
-          },
-          onDateSelected: (date) {
-            cubit.onDateSelected(date);
-          },
-          onFilterPressed: () {
-            log('Filter pressed');
-            Navigator.pop(context);
-          },
-        );
+        return FilterDialog(cubit: cubit);
       },
     );
   }
@@ -57,9 +43,13 @@ class TodayTasksPage extends StatelessWidget {
         child: Builder(
           builder: (context) {
             var cubit = TodayTasksCubit.get(context);
+            cubit.getTasks();
+            List<TaskModel> tasks = [];
+            cubit.getTasks();
+            log('message');
             return Scaffold(
               appBar: SimpleAppBar.build(
-                title: 'Tasks',
+                title: TranslationKeys.Tasks.tr,
                 onBack: () {
                   GetHelper.pop();
                 },
@@ -69,13 +59,13 @@ class TodayTasksPage extends StatelessWidget {
                 /////// Over Here 👇
                 onPressed: () => onFilterTapped(context, cubit),
               ),
-              body: BlocBuilder<UserCubit, UserState>(
+              body: BlocBuilder<TodayTasksCubit, TodayTasksState>(
                 builder: (context, state) {
-                  var tasks = UserCubit.get(context).userModel?.tasks;
-                  if (tasks == null || tasks.isEmpty) {
-                    return const Center(
+                  tasks = cubit.filteredTasks;
+                  if (tasks.isEmpty) {
+                    return Center(
                       child: Text(
-                        'No tasks available',
+                        TranslationKeys.Notasksavailable.tr,
                         style: TextStyle(fontSize: 20),
                       ),
                     );
@@ -89,7 +79,7 @@ class TodayTasksPage extends StatelessWidget {
                         const SizedBox(height: 20),
                         TitleWithCounter(
                           counter: tasks.length,
-                          title: 'Results',
+                          title: TranslationKeys.Results.tr,
                         ),
                         const SizedBox(height: 20),
 

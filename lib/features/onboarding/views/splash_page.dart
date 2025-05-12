@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../home/views/home_page.dart';
 import '../../../core/helper/get_helper.dart';
 import '../../auth/views/login_page.dart';
 import '../../../core/cache/cache_data.dart';
@@ -20,13 +21,18 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
+
+    Timer(const Duration(seconds: 3), () async {
       CacheData.firstTime = CacheHelper.getData(key: CacheKeys.firstTime);
+      CacheData.loggedIn = CacheHelper.getData(key: CacheKeys.loggedIn);
+      // CacheHelper.removeData(key: CacheKeys.firstTime);
+      // CacheHelper.removeData(key: CacheKeys.loggedIn);
       if (CacheData.firstTime == null) {
-        CacheHelper.saveData(key: CacheKeys.firstTime, value: true);
         GetHelper.pushReplace(() => const OnBoardingPage());
-      } else {
+      } else if (CacheData.loggedIn == null) {
         GetHelper.pushReplace(() => const LoginPage());
+      } else {
+        GetHelper.pushReplace(() => const HomePage());
       }
     });
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../../core/translation/translation_keys.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
 import '../../data/models/task_model.dart';
@@ -35,7 +37,7 @@ class OverallTaskContainer extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              'Your today’s tasks \nalmost done!',
+              TranslationKeys.yourTodaysTasksAlmostDone.tr,
               style: AppTextStyles.s14w400,
             ),
           ),
@@ -69,7 +71,7 @@ class OverallTaskContainer extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'View Tasks',
+                    TranslationKeys.viewTasks.tr,
                     textAlign: TextAlign.center,
                     style: AppTextStyles.s15w400,
                   ),

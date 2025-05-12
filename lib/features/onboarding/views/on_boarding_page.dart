@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../../../core/helper/get_helper.dart';
 import '../../../core/cache/cache_helper.dart';
 import '../../../core/cache/cache_keys.dart';
+import '../../../core/translation/translation_keys.dart';
 import '../../auth/views/signup_page.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_colors.dart';
@@ -27,8 +29,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             children: [
               SvgPicture.asset(AppAssets.onboarding),
               SizedBox(height: 30),
-              const Text(
-                'Welcome To \nDo It !',
+              Text(
+                TranslationKeys.welcomeToDoIt.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
@@ -38,8 +40,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               ),
 
               const SizedBox(height: 30),
-              const Text(
-                'Ready to conquer your tasks? Let\'s Do It together.',
+              Text(
+                TranslationKeys.readyToConquer.tr,
                 style: TextStyle(
                   color: AppColors.grey,
                   fontWeight: FontWeight.w500,
@@ -52,7 +54,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 width: double.infinity,
                 height: 50,
                 child: MyCustomeButton(
-                  text: 'Let\'s Start',
+                  text: TranslationKeys.letStart.tr,
                   onPressed: () async {
                     await CacheHelper.saveData(
                       key: CacheKeys.firstTime,

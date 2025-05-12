@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../../core/translation/translation_keys.dart';
 
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -120,13 +122,13 @@ class TaskCard extends StatelessWidget {
   String get _taskState {
     switch (task.taskState) {
       case TaskStatus.inProgress:
-        return 'In Progress';
+        return TranslationKeys.InProgress.tr;
       case TaskStatus.done:
-        return 'Done';
+        return TranslationKeys.Done.tr;
       case TaskStatus.missed:
-        return 'Missed';
+        return TranslationKeys.missed.tr;
       default:
-        return 'In Progress';
+        return TranslationKeys.InProgress.tr;
     }
   }
 

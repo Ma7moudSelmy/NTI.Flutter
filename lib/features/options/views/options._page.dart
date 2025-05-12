@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../core/helper/get_helper.dart';
+import '../../../core/translation/translation_keys.dart';
 import 'Update_password_page.dart';
 import 'language_page.dart';
 import 'update_username_page.dart';
@@ -30,21 +32,21 @@ class _OptionsPageState extends State<OptionsPage> {
           child: Column(
             children: [
               OptionContainer(
-                title: 'Update Profile',
+                title: TranslationKeys.updateProfile.tr,
                 icon: AppAssets.profile,
                 onTap: () {
                   GetHelper.push(() => const UpdateUsernamePage());
                 },
               ),
               OptionContainer(
-                title: 'Change Password',
+                title: TranslationKeys.changePassword.tr,
                 icon: AppAssets.lock,
                 onTap: () {
                   GetHelper.push(() => const UpdatePasswordPage());
                 },
               ),
               OptionContainer(
-                title: 'Settings',
+                title: TranslationKeys.settings.tr,
                 icon: AppAssets.settings,
                 onTap: () {
                   GetHelper.push(() => const LanguagePage());

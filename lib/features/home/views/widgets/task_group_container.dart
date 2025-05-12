@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // Add this import for `.tr`
+import '../../../../core/translation/translation_keys.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
@@ -38,7 +40,7 @@ class TaskGroupContainer extends StatelessWidget {
           tasks.where((task) => task.taskType == TaskGroup.personal).length,
       counterColor: AppColors.primaryColor,
       counterBackGroundColor: AppColors.lightGreen,
-      taskGroup: 'personal',
+      taskGroup: TranslationKeys.personal.tr, // Replaced string
       taskCount:
           tasks.where((task) => task.taskType == TaskGroup.personal).length,
       icon: AppAssets.personal,
@@ -50,7 +52,7 @@ class TaskGroupContainer extends StatelessWidget {
       counter: tasks.where((task) => task.taskType == TaskGroup.work).length,
       counterColor: AppColors.white,
       counterBackGroundColor: AppColors.black,
-      taskGroup: 'work',
+      taskGroup: TranslationKeys.work.tr, // Replaced string
       taskCount: tasks.where((task) => task.taskType == TaskGroup.work).length,
       icon: AppAssets.work,
     );
@@ -61,7 +63,7 @@ class TaskGroupContainer extends StatelessWidget {
       counter: tasks.where((task) => task.taskType == TaskGroup.home).length,
       counterColor: AppColors.darkPink,
       counterBackGroundColor: AppColors.lightPink,
-      taskGroup: 'home',
+      taskGroup: TranslationKeys.home.tr, // Replaced string
       taskCount: tasks.where((task) => task.taskType == TaskGroup.home).length,
       icon: AppAssets.home,
     );
@@ -71,7 +73,7 @@ class TaskGroupContainer extends StatelessWidget {
     int counter = 0,
     Color counterColor = AppColors.white,
     Color counterBackGroundColor = AppColors.white,
-    String taskGroup = 'personal',
+    String taskGroup = '',
     int taskCount = 0,
     String icon = AppAssets.personal,
   }) {
@@ -90,7 +92,10 @@ class TaskGroupContainer extends StatelessWidget {
             SvgWrappe(assetName: icon),
             SizedBox(width: 10),
             Expanded(
-              child: Text('$taskGroup Tasks', style: AppTextStyles.s14w300),
+              child: Text(
+                '$taskGroup ${TranslationKeys.Tasks.tr}', // Replaced string
+                style: AppTextStyles.s14w300,
+              ),
             ),
             Container(
               width: 22,

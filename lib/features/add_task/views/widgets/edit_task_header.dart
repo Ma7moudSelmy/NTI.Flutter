@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../../core/translation/translation_keys.dart';
+import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_text_styles.dart';
 import '../../../home/data/models/task_model.dart';
@@ -30,10 +33,16 @@ class EditTaskHeader extends StatelessWidget {
             child: CircleAvatar(
               radius: 40,
 
-              child: ClipOval(child: Image.asset("assets/images/logo.png")),
+              child: ClipOval(
+                child: Image.asset(
+                  AppAssets.profileImage,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
-
           const SizedBox(width: 15),
           Expanded(
             child: Column(
@@ -60,26 +69,26 @@ class EditTaskHeader extends StatelessWidget {
   String get _title {
     switch (taskStatus) {
       case TaskStatus.inProgress:
-        return 'In Progress';
+        return TranslationKeys.InProgress.tr;
       case TaskStatus.done:
-        return 'Done';
+        return TranslationKeys.Done.tr;
       case TaskStatus.missed:
-        return 'Missed Task';
+        return TranslationKeys.MissedTask.tr;
       default:
-        return 'In Progress';
+        return TranslationKeys.InProgress.tr;
     }
   }
 
   String get _subTitle {
     switch (taskStatus) {
       case TaskStatus.inProgress:
-        return 'Believe you can, and you\'re halfway there.';
+        return TranslationKeys.Believeyouanandyourehalfwaythere.tr;
       case TaskStatus.done:
-        return 'Congrats!';
+        return TranslationKeys.Congrats.tr;
       case TaskStatus.missed:
-        return 'There is Always another chance.';
+        return TranslationKeys.ThereisAlwaysanotherchance.tr;
       default:
-        return 'Believe you can, and you\'re halfway there.';
+        return TranslationKeys.Believeyouanandyourehalfwaythere.tr;
     }
   }
 }

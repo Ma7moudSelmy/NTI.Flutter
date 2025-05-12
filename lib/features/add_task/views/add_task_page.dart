@@ -3,11 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import '../../../core/translation/translation_keys.dart';
 import '../../../core/helper/get_helper.dart';
 import '../../../core/utils/app_assets.dart';
 
+import '../../home/views/home_page.dart';
 import '../manager/add_task_cubit/add_task_cubit.dart';
-import '../../home/manager/user_cubit/user_cubit.dart';
 import '../../../core/widgets/date_field.dart';
 import '../manager/add_task_cubit/add_task_state.dart';
 import 'widgets/add_task_image.dart';
@@ -33,7 +35,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           var cubit = AddTaskCubit.get(context);
           return Scaffold(
             appBar: SimpleAppBar.build(
-              title: 'Add Task',
+              title: TranslationKeys.addTask.tr,
               onBack: () {
                 Navigator.pop(context);
               },
@@ -64,7 +66,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                       File(cubit.imageFile!.path),
                                       fit: BoxFit.cover,
                                     )
-                                    : Image.asset(AppAssets.profileImage),
+                                    : Image.asset(
+                                      AppAssets.profileImage,
+                                      fit: BoxFit.cover,
+                                    ),
                           );
                         },
                       ),
@@ -115,16 +120,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       BlocConsumer<AddTaskCubit, AddTaskState>(
                         listener: (context, state) {
                           if (state is AddTaskSuccess) {
-                            // TODO: Handle success state
-                            GetHelper.pop();
+                            GetHelper.pushReplaceAll(() => HomePage());
                           }
                         },
                         builder: (context, state) {
                           return MyCustomeButton(
-                            text: 'Add Task',
+                            text: TranslationKeys.addTask.tr,
                             isLoading: state is AddTaskLoading,
                             onPressed: () {
-                              cubit.addTask(UserCubit.get(context));
+                              cubit.addTaskToRepo();
                             },
                           );
                         },
