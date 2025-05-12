@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:nti_12_task/features/auth/data/repo/user_repo.dart';
 import '../manager/get_tasks/get_tasks_cubit.dart';
 import '../manager/get_tasks/get_tasks_state.dart';
 import '../../../core/helper/get_helper.dart';
@@ -98,8 +97,7 @@ class HomePage extends StatelessWidget {
         children: [
           const SizedBox(height: 50),
           Text(
-            //TranslationKeys.TherearenotasksyetnPressthebuttonnToaddNewTask.tr,
-            UserRepo().userModel.aToken ?? 'gg',
+            TranslationKeys.TherearenotasksyetnPressthebuttonnToaddNewTask.tr,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w300,

@@ -6,8 +6,6 @@ class UserModel {
   String? password;
   XFile? image;
   List<TaskModel>? tasks;
-  String? aToken;
-  String? rToken;
 
   UserModel({this.name, this.image, this.password, this.tasks});
 }

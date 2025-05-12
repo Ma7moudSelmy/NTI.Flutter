@@ -61,11 +61,10 @@ class LoginPage extends StatelessWidget {
                                   SnackBar(content: Text(state.errorMessage)),
                                 );
                               } else if (state is LoginSuccessState) {
-                                // Cache loggedin ££££££££££££££
-                                // await CacheHelper.saveData(
-                                //   key: CacheKeys.loggedIn,
-                                //   value: true,
-                                // );
+                                await CacheHelper.saveData(
+                                  key: CacheKeys.loggedIn,
+                                  value: true,
+                                );
 
                                 GetHelper.pushReplaceAll(() => HomePage());
                               }

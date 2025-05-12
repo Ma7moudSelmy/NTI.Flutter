@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart'; // Add this import for `.tr`
-import 'package:image_picker/image_picker.dart';
 
 import '../../../core/helper/get_helper.dart';
-import '../../../core/widgets/image_manager/image_manager_view.dart';
 import '../../../core/translation/translation_keys.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_colors.dart';
@@ -35,50 +33,17 @@ class SignupPage extends StatelessWidget {
                 children: [
                   BlocBuilder<SignupCubit, SignupState>(
                     builder: (context, state) {
-                      // return MainImage(
-                      //   onTap: () {
-                      //     cubit.onChangeImage();
-                      //   },
-                      //   image:
-                      //       cubit.imageFile != null
-                      //           ? Image.file(
-                      //             File(cubit.imageFile!.path),
-                      //             fit: BoxFit.cover,
-                      //           )
-                      //           : Image.asset(AppAssets.logo),
-                      // );
-                      return ImageManagerView(
-                        onPicked: (XFile image) {
-                          cubit.imageFile = image;
+                      return MainImage(
+                        onTap: () {
+                          cubit.onChangeImage();
                         },
-                        pickedBody: (XFile image) {
-                          return Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.36,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20),
-                              ),
-                              image: DecorationImage(
-                                image: FileImage(File(image.path)),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          );
-                        },
-                        unPickedBody: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          ),
-                          child: Image.asset(
-                            AppAssets.logo,
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.36,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        image:
+                            cubit.imageFile != null
+                                ? Image.file(
+                                  File(cubit.imageFile!.path),
+                                  fit: BoxFit.cover,
+                                )
+                                : Image.asset(AppAssets.logo),
                       );
                     },
                   ),

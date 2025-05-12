@@ -40,37 +40,20 @@ class SignupCubit extends Cubit<SignupState> {
     emit(SignupChangeImageState());
   }
 
-  void onSignupPressed() async {
+  void onSignupPressed() {
     emit(SignupLoading());
-    Future.delayed(const Duration(seconds: 2), () async {
+    Future.delayed(const Duration(seconds: 2), () {
       if (!formKey.currentState!.validate()) {
         emit(SignupError());
         return;
       }
-      // ######## using repo only #########
-      // UserRepo userRepo = UserRepo();
-      // TasksRepo tasksRepo = TasksRepo();
-      // userRepo.userModel.name = usernameController.text;
-      // userRepo.userModel.password = passwordController.text;
-      // userRepo.userModel.image = imageFile;
-      // // Tie the tasks in the userModel with the tasksRepo
-      // userRepo.userModel.tasks = tasksRepo.tasks;
-
-      // ######## using API #########
-      var result = await UserRepo().register(
-        usernameController.text,
-        passwordController.text,
-      );
-      result.fold(
-        (error) {
-          // left
-          emit(SignupError(errorMessage: error));
-        },
-        (r) {
-          // right
-          emit(SignupSuccess());
-        },
-      );
+      UserRepo userRepo = UserRepo();
+      TasksRepo tasksRepo = TasksRepo();
+      userRepo.userModel.name = usernameController.text;
+      userRepo.userModel.password = passwordController.text;
+      userRepo.userModel.image = imageFile;
+      // Tie the tasks in the userModel with the tasksRepo
+      userRepo.userModel.tasks = tasksRepo.tasks;
       emit(SignupSuccess());
     });
   }
