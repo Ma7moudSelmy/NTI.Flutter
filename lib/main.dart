@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:nti_12_task/features/Auth/data/models/user_model.dart';
 import 'core/cache/cache_data.dart';
 import 'core/translation/translation_helper.dart';
 import 'features/onboarding/views/splash_page.dart';
