@@ -66,10 +66,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                       File(cubit.imageFile!.path),
                                       fit: BoxFit.cover,
                                     )
-                                    : Image.asset(
-                                      AppAssets.profileImage,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    : Image.asset("assets/images/logo.png"),
                           );
                         },
                       ),

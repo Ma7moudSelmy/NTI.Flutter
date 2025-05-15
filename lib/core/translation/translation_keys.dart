@@ -18,7 +18,7 @@ abstract class TranslationKeys {
   static const rememberMe = "rememberMe";
   static const signupFailed = "signupFailed";
   static const hello = "hello";
-  static const adventurer = "adventurer";
+  static const adventurer = "Ma7moudSelmy";
   static const male = "male";
   static const female = "female";
   static const addTask = "addTask";
