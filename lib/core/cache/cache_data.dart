@@ -5,4 +5,6 @@ abstract class CacheData {
   static UserModel? userModel;
   static bool? loggedIn;
   static String? lang;
+  static String? accessToken;
+  static String? refreshToken;
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/repo/user_repo.dart';
@@ -19,20 +21,24 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginShowPassState());
   }
 
-  void onLoginPressed() {
+  void onLoginPressed() async {
+    if (!formKey.currentState!.validate()) return;
     emit(LoginLoadingState());
-    Future.delayed(const Duration(seconds: 2), () {
-      if (!formKey.currentState!.validate()) {
-        emit(LoginErrorState(errorMessage: 'Please enter valid data'));
-        return;
-      }
-      UserRepo userRepo = UserRepo();
-      if (userRepo.userModel.name != usernameController.text ||
-          userRepo.userModel.password != passwordController.text) {
-        emit(LoginErrorState(errorMessage: 'Invalid username or password'));
-        return;
-      }
-      emit(LoginSuccessState(userModel: userRepo.userModel));
-    });
+    UserRepo userRepo = UserRepo();
+    var result = await userRepo.login(
+      username: usernameController.text,
+      password: passwordController.text,
+    );
+    result.fold(
+      (error) {
+        emit(LoginErrorState(errorMessage: error));
+        log('Login error: $error');
+      },
+      (userModel) {
+        emit(LoginSuccessState(userModel: userModel));
+
+        log('Login success: ${userModel.imagePath ?? ''}');
+      },
+    );
   }
 }

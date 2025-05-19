@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/translation/translation_keys.dart';
@@ -49,8 +47,8 @@ class TaskCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(7),
               child:
-                  task.imageFile?.path != null
-                      ? Image.file(File(task.imageFile!.path))
+                  task.imagePath != null
+                      ? Image.network(task.imagePath!)
                       : Image.asset(AppAssets.profileImage, fit: BoxFit.fill),
             ),
           ),

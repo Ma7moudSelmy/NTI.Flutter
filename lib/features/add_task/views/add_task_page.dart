@@ -8,6 +8,7 @@ import '../../../core/translation/translation_keys.dart';
 import '../../../core/helper/get_helper.dart';
 import '../../../core/utils/app_assets.dart';
 
+import '../../home/manager/user_cubit/user_cubit.dart';
 import '../../home/views/home_page.dart';
 import '../manager/add_task_cubit/add_task_cubit.dart';
 import '../../../core/widgets/date_field.dart';
@@ -66,7 +67,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                       File(cubit.imageFile!.path),
                                       fit: BoxFit.cover,
                                     )
-                                    : Image.asset("assets/images/logo.png"),
+                                    : Image.network(
+                                      UserCubit.get(
+                                        context,
+                                      ).userModel!.imagePath!,
+                                    ),
                           );
                         },
                       ),
@@ -118,6 +123,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         listener: (context, state) {
                           if (state is AddTaskSuccess) {
                             GetHelper.pushReplaceAll(() => HomePage());
+                          } else if (state is AddTaskError) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.errorMessage),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
                           }
                         },
                         builder: (context, state) {
@@ -125,7 +137,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                             text: TranslationKeys.addTask.tr,
                             isLoading: state is AddTaskLoading,
                             onPressed: () {
-                              cubit.addTaskToRepo();
+                              cubit.addTaskApi();
                             },
                           );
                         },

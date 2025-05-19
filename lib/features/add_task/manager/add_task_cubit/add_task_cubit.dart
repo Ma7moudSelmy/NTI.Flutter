@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../home/data/repo/tasks_repo.dart';
 import 'add_task_state.dart';
-import '../../../home/data/my_tasks.dart';
 
 import '../../../../core/utils/app_assets.dart';
 import '../../../home/data/models/task_model.dart';
@@ -43,6 +42,55 @@ class AddTaskCubit extends Cubit<AddTaskState> {
     emit(AddTaskChangeImage());
   }
 
+  void addTaskApi() async {
+    emit(AddTaskLoading());
+    Future.delayed(const Duration(seconds: 1), () async {
+      if (formKey.currentState!.validate()) {
+        TasksRepo tasksRepo = TasksRepo();
+        TaskGroup taskGroup = () {
+          if (group!.name == 'Work') {
+            return TaskGroup.work;
+          } else if (group!.name == 'Personal') {
+            return TaskGroup.personal;
+          } else {
+            return TaskGroup.home;
+          }
+        }();
+        var result = await tasksRepo.addTask(
+          task: TaskModel(
+            title: titleController.text,
+            description: descriptionController.text,
+            id: 1,
+            taskState: TaskStatus.inProgress,
+            taskType: taskGroup,
+            endTime: endDate,
+            imageFile: imageFile,
+          ),
+        );
+        result.fold(
+          (error) {
+            emit(AddTaskError(errorMessage: error));
+          },
+          (success) {
+            tasksRepo.tasks.add(
+              TaskModel(
+                title: titleController.text,
+                description: descriptionController.text,
+                id: 1,
+                taskState: TaskStatus.inProgress,
+                taskType: taskGroup,
+                endTime: endDate,
+                imageFile: imageFile,
+              ),
+            );
+          },
+        );
+        emit(AddTaskSuccess());
+      } else {
+        emit(AddTaskError(errorMessage: 'please fill all fields'));
+      }
+    });
+  }
   // void addTask(UserCubit userCubit) {
   //   emit(AddTaskLoading());
   //   Future.delayed(const Duration(seconds: 1), () {
@@ -75,36 +123,36 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   //   });
   // }
 
-  void addTaskToRepo() {
-    emit(AddTaskLoading());
+  // void addTaskToRepo() {
+  //   emit(AddTaskLoading());
 
-    Future.delayed(const Duration(seconds: 1), () {
-      if (formKey.currentState!.validate()) {
-        TasksRepo tasksRepo = TasksRepo();
-        TaskGroup taskGroup = () {
-          if (group!.name == 'Work') {
-            return TaskGroup.work;
-          } else if (group!.name == 'Personal') {
-            return TaskGroup.personal;
-          } else {
-            return TaskGroup.home;
-          }
-        }();
-        tasksRepo.addTask(
-          TaskModel(
-            title: titleController.text,
-            description: descriptionController.text,
-            id: MyTasks.myTasks.length,
-            taskState: TaskStatus.inProgress,
-            taskType: taskGroup,
-            endTime: endDate,
-            imageFile: imageFile,
-          ),
-        );
-        emit(AddTaskSuccess());
-      } else {
-        emit(AddTaskError(errorMessage: 'please fill all fields'));
-      }
-    });
-  }
+  //   Future.delayed(const Duration(seconds: 1), () {
+  //     if (formKey.currentState!.validate()) {
+  //       TasksRepo tasksRepo = TasksRepo();
+  //       TaskGroup taskGroup = () {
+  //         if (group!.name == 'Work') {
+  //           return TaskGroup.work;
+  //         } else if (group!.name == 'Personal') {
+  //           return TaskGroup.personal;
+  //         } else {
+  //           return TaskGroup.home;
+  //         }
+  //       }();
+  //       tasksRepo.addTask(
+  //         TaskModel(
+  //           title: titleController.text,
+  //           description: descriptionController.text,
+  //           id: 1,
+  //           taskState: TaskStatus.inProgress,
+  //           taskType: taskGroup,
+  //           endTime: endDate,
+  //           imageFile: imageFile,
+  //         ),
+  //       );
+  //       emit(AddTaskSuccess());
+  //     } else {
+  //       emit(AddTaskError(errorMessage: 'please fill all fields'));
+  //     }
+  //   });
+  // }
 }

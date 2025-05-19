@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart'; // Add this import for `.tr`
@@ -20,7 +18,7 @@ abstract class HomeAppBar {
         builder: (context, state) {
           var cubit = UserCubit.get(context);
           if (state is UserInitialState) {
-            cubit.getUser();
+            // cubit.getUser();
           }
           return Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
@@ -33,8 +31,11 @@ abstract class HomeAppBar {
                     backgroundColor: AppColors.scaffoldBackground,
                     child: ClipOval(
                       child:
-                          cubit.userModel?.image != null
-                              ? Image.file(File(cubit.userModel!.image!.path))
+                          state is UserLoadingState
+                              ? null
+                              : state is UserDataSuccessState &&
+                                  state.userModel.imagePath != null
+                              ? Image.network(state.userModel.imagePath!)
                               : Image.asset(
                                 AppAssets.logo,
                                 fit: BoxFit.cover,
@@ -57,8 +58,12 @@ abstract class HomeAppBar {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        cubit.userModel?.name ??
-                            TranslationKeys.adventurer.tr, // Replaced string
+                        state is UserLoadingState
+                            ? ''
+                            : state is UserDataSuccessState &&
+                                state.userModel.imagePath != null
+                            ? state.userModel.username!
+                            : TranslationKeys.adventurer.tr, // Replaced string
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w300,

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:nti_15_task/core/helper/my_logger.dart';
 import '../../../core/translation/translation_keys.dart';
 import '../../../core/helper/get_helper.dart';
 import '../../home/manager/user_cubit/user_cubit.dart';
@@ -44,15 +45,13 @@ class UpdateUsernamePage extends StatelessWidget {
                             cubit.imageFile == null
                                 ? (UserCubit.get(
                                           context,
-                                        ).userModel?.image?.path !=
+                                        ).userModel?.imagePath !=
                                         null
-                                    ? Image.file(
-                                      File(
-                                        UserCubit.get(
-                                              context,
-                                            ).userModel?.image?.path ??
-                                            '',
-                                      ),
+                                    ? Image.network(
+                                      UserCubit.get(
+                                            context,
+                                          ).userModel?.imagePath ??
+                                          '',
                                     )
                                     : Image.asset(AppAssets.logo))
                                 : Image.file(File(cubit.imageFile!.path)),
@@ -89,6 +88,9 @@ class UpdateUsernamePage extends StatelessWidget {
                                 text: TranslationKeys.update.tr,
                                 isLoading: state is UpdateUsernameLoading,
                                 onPressed: () {
+                                  // MyLogger.magenta(
+                                  //   '${UserCubit.get(context).userModel?.username}',
+                                  // );
                                   cubit.updateUsername(UserCubit.get(context));
                                 },
                               );

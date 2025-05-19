@@ -7,16 +7,20 @@ class TaskModel {
   TaskStatus taskState;
   TaskGroup taskType;
   DateTime? endTime;
+  DateTime? createdAt;
   XFile? imageFile;
+  String? imagePath;
 
   TaskModel({
     required this.id,
     required this.title,
     required this.description,
-    required this.taskState,
-    required this.taskType,
+    this.taskState = TaskStatus.inProgress,
+    this.taskType = TaskGroup.personal,
     this.endTime,
     this.imageFile,
+    this.createdAt,
+    this.imagePath,
   });
 }
 

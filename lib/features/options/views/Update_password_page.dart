@@ -1,89 +1,100 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:nti_15_task/core/helper/get_helper.dart';
+import 'package:nti_15_task/features/home/manager/user_cubit/user_cubit.dart';
+import 'package:nti_15_task/features/options/manager/update_password_cubit.dart/update_password_cubit.dart';
 import '../../../core/translation/translation_keys.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/widgets/main_image.dart';
 import '../../../core/widgets/my_custom_button.dart';
 import '../../../core/widgets/my_text_form_field.dart';
+import '../manager/update_password_cubit.dart/update_password_state.dart';
 
-class UpdatePasswordPage extends StatefulWidget {
+class UpdatePasswordPage extends StatelessWidget {
   const UpdatePasswordPage({super.key});
 
   @override
-  State<UpdatePasswordPage> createState() => _UpdatePasswordPageState();
-}
-
-class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
-  final TextEditingController oldPassController = TextEditingController();
-  final TextEditingController newPassController = TextEditingController();
-  TextEditingController confirmPassController = TextEditingController();
-  int? selectedGender = 0;
-  bool rememberMe = false;
-  bool showPass = true;
-  final _formKey = GlobalKey<FormState>();
-
-  bool visibality() {
-    return showPass;
-  }
-
-  void onChangeVisibality() {
-    setState(() {
-      showPass = !showPass;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            MainImage(image: Image.asset(AppAssets.logo)),
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Column(
-                  children: [
-                    MyTextFormField(
-                      fieldType: TextFieldType.password,
-                      controller: oldPassController,
-                      onSuffixPressed: onChangeVisibality,
-                      obsecureText: true,
+    return BlocProvider(
+      create: (context) => UpdatePasswordCubit(),
+      child: Builder(
+        builder: (context) {
+          var cubit = UpdatePasswordCubit.get(context);
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  MainImage(
+                    image: Image.network(
+                      UserCubit.get(context).userModel?.imagePath ??
+                          AppAssets.logo,
                     ),
-                    SizedBox(height: 30),
-                    MyTextFormField(
-                      fieldType: TextFieldType.password,
-                      controller: newPassController,
-                      onSuffixPressed: onChangeVisibality,
-                      obsecureText: true,
-                    ),
-                    SizedBox(height: 30),
-                    MyTextFormField(
-                      fieldType: TextFieldType.confirmPasword,
-                      controller: confirmPassController,
-                      onSuffixPressed: onChangeVisibality,
-                      obsecureText: true,
-                      passController: newPassController,
-                    ),
-                    SizedBox(height: 30),
-                    MyCustomeButton(
-                      text: TranslationKeys.update.tr,
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
-                    SizedBox(height: 25),
-                  ],
-                ),
+                  ),
+                  BlocConsumer<UpdatePasswordCubit, UpdatePasswordState>(
+                    listener: (context, state) {
+                      if (state is UpdatePasswordSuccess) {
+                        log(state.message);
+                        GetHelper.pop();
+                      } else if (state is UpdatePasswordError) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text(state.error)));
+                        log(state.error);
+                      }
+                    },
+                    builder: (context, state) {
+                      return Form(
+                        key: cubit.formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Column(
+                            children: [
+                              MyTextFormField(
+                                fieldType: TextFieldType.password,
+                                controller: cubit.currentPass,
+                                onSuffixPressed: cubit.changeVisibality,
+                                obsecureText: cubit.obsecure,
+                              ),
+                              SizedBox(height: 30),
+                              MyTextFormField(
+                                fieldType: TextFieldType.password,
+                                controller: cubit.newPass,
+                                onSuffixPressed: cubit.changeVisibality,
+                                obsecureText: cubit.obsecure,
+                              ),
+                              SizedBox(height: 30),
+                              MyTextFormField(
+                                fieldType: TextFieldType.confirmPasword,
+                                controller: cubit.confirmPass,
+                                onSuffixPressed: cubit.changeVisibality,
+                                obsecureText: cubit.obsecure,
+                                passController: cubit.newPass,
+                              ),
+                              SizedBox(height: 30),
+                              MyCustomeButton(
+                                text: TranslationKeys.update.tr,
+                                isLoading: state is UpdatePasswordLoading,
+                                onPressed: () {
+                                  cubit.updatePassword();
+                                },
+                              ),
+                              SizedBox(height: 25),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

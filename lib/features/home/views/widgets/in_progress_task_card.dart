@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -11,7 +10,7 @@ class InProgressTaskCard extends StatelessWidget {
   final TaskModel taskModel;
   final double width = 230;
   final double height = 90;
-  final void Function()? onTapped;
+  final void Function(int id)? onTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +72,7 @@ class InProgressTaskCard extends StatelessWidget {
     TextStyle? descriptionTextStyle,
   }) {
     return InkWell(
-      onTap: onTapped,
+      onTap: () => onTapped!(taskModel.id),
       child: Container(
         width: width,
         height: height,

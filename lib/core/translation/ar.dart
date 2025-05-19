@@ -49,7 +49,7 @@ Map<String, String> ar = {
   TranslationKeys.signupFailed: "فشل التسجيل",
   TranslationKeys.dontHaveAnAccount: "ليس لديك حساب؟",
   TranslationKeys.delete: "حذف",
-  TranslationKeys.adventurer: "مغامر",
+  TranslationKeys.adventurer: "محمود",
   TranslationKeys.male: "ذكر",
   TranslationKeys.female: "أنثى",
   TranslationKeys.viewTasks: "عرض المهام",

@@ -45,7 +45,7 @@ class TodayTasksPage extends StatelessWidget {
             var cubit = TodayTasksCubit.get(context);
             cubit.getTasks();
             List<TaskModel> tasks = [];
-            cubit.getTasks();
+            // cubit.getTasks();
             log('message');
             return Scaffold(
               appBar: SimpleAppBar.build(

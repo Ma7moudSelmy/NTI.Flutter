@@ -28,13 +28,13 @@ class UpdateUsernameCubit extends Cubit<UpdateUsernameState> {
     log('name from UpdateUsernameCubit: ${usernameController.text}');
     Future.delayed(const Duration(seconds: 2), () {
       if (formKey.currentState!.validate()) {
-        userCubit.updateUserName(usernameController.text);
+        userCubit.updateUserName(usernameController.text, imageFile);
 
         // Check if imageFile is not null before updating the user image
         // -------> user didn't change the image <-------
-        if (imageFile != null) {
-          userCubit.updateUserImage(imageFile!);
-        }
+        // if (imageFile != null) {
+        //   userCubit.updateUserImage(imageFile!);
+        // }
 
         emit(UpdateUsernameSuccess(usernameController.text));
       } else {

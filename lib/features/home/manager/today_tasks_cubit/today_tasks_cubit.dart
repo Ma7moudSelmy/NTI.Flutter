@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/repo/tasks_repo.dart';
 import '../../data/models/task_model.dart';
@@ -30,7 +28,6 @@ class TodayTasksCubit extends Cubit<TodayTasksState> {
   void onGroupFilterChanged(TaskGroup group) {
     groupFilters.updateAll((_, __) => false);
     groupFilters[group] = true;
-    log('group selected');
     emit(GroupFilterChangedState());
   }
 
@@ -39,7 +36,6 @@ class TodayTasksCubit extends Cubit<TodayTasksState> {
 
     statusFilters[status] = true;
 
-    log('Status selected: $status');
     emit(StatusFilterChangedState());
   }
 

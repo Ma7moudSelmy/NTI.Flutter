@@ -7,8 +7,13 @@ import '../../../../core/utils/app_text_styles.dart';
 import '../../../home/data/models/task_model.dart';
 
 class EditTaskHeader extends StatelessWidget {
-  const EditTaskHeader({super.key, this.taskStatus = TaskStatus.inProgress});
+  const EditTaskHeader({
+    super.key,
+    this.taskStatus = TaskStatus.inProgress,
+    required this.image,
+  });
   final TaskStatus taskStatus;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +39,8 @@ class EditTaskHeader extends StatelessWidget {
               radius: 40,
 
               child: ClipOval(
-                child: Image.asset(
-                  AppAssets.profileImage,
+                child: Image.network(
+                  image!,
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,

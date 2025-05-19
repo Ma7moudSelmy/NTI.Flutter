@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../data/repo/user_repo.dart';
-import '../../../home/data/repo/tasks_repo.dart';
 import 'signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {
@@ -40,20 +39,38 @@ class SignupCubit extends Cubit<SignupState> {
     emit(SignupChangeImageState());
   }
 
-  void onSignupPressed() {
+  void onSignupPressed() async {
     emit(SignupLoading());
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () async {
       if (!formKey.currentState!.validate()) {
         emit(SignupError());
         return;
       }
-      UserRepo userRepo = UserRepo();
-      TasksRepo tasksRepo = TasksRepo();
-      userRepo.userModel.name = usernameController.text;
-      userRepo.userModel.password = passwordController.text;
-      userRepo.userModel.image = imageFile;
-      // Tie the tasks in the userModel with the tasksRepo
-      userRepo.userModel.tasks = tasksRepo.tasks;
+      // ######## using repo only #########
+      // UserRepo userRepo = UserRepo();
+      // TasksRepo tasksRepo = TasksRepo();
+      // userRepo.userModel.name = usernameController.text;
+      // userRepo.userModel.password = passwordController.text;
+      // userRepo.userModel.image = imageFile;
+      // // Tie the tasks in the userModel with the tasksRepo
+      // userRepo.userModel.tasks = tasksRepo.tasks;
+
+      // ######## using API #########
+      var result = await UserRepo().register(
+        usernameController.text,
+        passwordController.text,
+        imageFile,
+      );
+      result.fold(
+        (error) {
+          // left
+          emit(SignupError(errorMessage: error));
+        },
+        (r) {
+          // right
+          emit(SignupSuccess());
+        },
+      );
       emit(SignupSuccess());
     });
   }

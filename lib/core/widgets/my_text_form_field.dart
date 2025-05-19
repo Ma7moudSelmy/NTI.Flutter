@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../translation/translation_keys.dart';
-import '../../features/add_task/data/models/group_model.dart';
-import '../utils/app_text_styles.dart';
 
-import '../wrapper/svg_wrapper.dart';
+import '../../features/add_task/data/models/group_model.dart';
+import '../translation/translation_keys.dart';
 import '../utils/app_assets.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_text_styles.dart';
+import '../wrapper/svg_wrapper.dart';
 
 class MyTextFormField extends StatelessWidget {
   const MyTextFormField({
@@ -77,6 +77,7 @@ class MyTextFormField extends StatelessWidget {
                 ? TranslationKeys.ConfirmPassword.tr
                 : TranslationKeys.Password.tr,
       ),
+      //obscureText: obsecureText,
       obscureText: obsecureText,
     );
   }
